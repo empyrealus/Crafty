@@ -6,31 +6,32 @@ var Crafty = require('./crafty-common.js')();
 Crafty.extend(require('./core/loader'));
 Crafty.extend(require('./inputs/dom-events'));
 
+
+// I didn't test this, you could build upon this logic for some dynamic pre_reqs
+
 // Needs to be required before any specific layers are
-require('./graphics/layers');
-require('./graphics/canvas');
-require('./graphics/canvas-layer');
-require('./graphics/webgl');
-require('./graphics/webgl-layer');
+// Requirements List
+const preReqs = ["'./graphics/layers'","'./graphics/canvas'","'./graphics/canvas-layer'","'./graphics/webgl'","'./graphics/webgl-layer'","'./graphics/color'","'./graphics/dom'","'./graphics/dom-helper'","'./graphics/dom-layer'","'./graphics/drawing'","'./graphics/gl-textures'","'./graphics/renderable'","'./graphics/html'","'./graphics/image'","'./graphics/particles'","'./graphics/sprite-animation'","'./graphics/sprite'","'./graphics/text'","'./graphics/viewport'","'./isometric/diamond-iso'","'./isometric/isometric'"]
 
-require('./graphics/color');
-require('./graphics/dom');
-require('./graphics/dom-helper');
-require('./graphics/dom-layer');
-require('./graphics/drawing');
-require('./graphics/gl-textures');
-require('./graphics/renderable');
-require('./graphics/html');
-require('./graphics/image');
-require('./graphics/particles');
-require('./graphics/sprite-animation');
-require('./graphics/sprite');
-require('./graphics/text');
-require('./graphics/viewport');
+load_requirements.apply(this, preReqs);
 
-require('./isometric/diamond-iso');
-require('./isometric/isometric');
+function load_requirements()
+{
+ for(let i in preReqs)
+ {
+  try{
+    require(preReqs[i]);
+   }
+   catch(e){
+      //do something with the error, if you wish...
+    }
+   finally{continue;}
+ }
+}
 
+
+
+// Edit** you could include all of this in the above loop.
 // Needs to be required before any specific inputs are
 require('./inputs/util');
 require('./inputs/device');
